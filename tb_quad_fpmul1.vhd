@@ -25,20 +25,20 @@ architecture A of E is
 
   component quad_fpmul1
     Port ( 
-      CLOCK : std_logic;
-      RESET : std_logic;
-      x0    : std_logic_vector(31 downto 0);
-      x1    : std_logic_vector(31 downto 0);
-      x2    : std_logic_vector(31 downto 0);
-      x3    : std_logic_vector(31 downto 0);
-      y0    : std_logic_vector(31 downto 0);
-      y1    : std_logic_vector(31 downto 0);
-      y2    : std_logic_vector(31 downto 0);
-      y3    : std_logic_vector(31 downto 0);
-      p0    : std_logic_vector(31 downto 0);
-      p1    : std_logic_vector(31 downto 0);
-      p2    : std_logic_vector(31 downto 0);
-      p3    : std_logic_vector(31 downto 0);
+      CLOCK : in std_logic;
+      RESET : in std_logic;
+      x0    : in std_logic_vector(31 downto 0);
+      x1    : in std_logic_vector(31 downto 0);
+      x2    : in std_logic_vector(31 downto 0);
+      x3    : in std_logic_vector(31 downto 0);
+      y0    : in std_logic_vector(31 downto 0);
+      y1    : in std_logic_vector(31 downto 0);
+      y2    : in std_logic_vector(31 downto 0);
+      y3    : in std_logic_vector(31 downto 0);
+      p0    : out std_logic_vector(31 downto 0);
+      p1    : out std_logic_vector(31 downto 0);
+      p2    : out std_logic_vector(31 downto 0);
+      p3    : out std_logic_vector(31 downto 0)
     );
   end component;
 
@@ -67,7 +67,7 @@ begin
     process
       file cmdfile: TEXT; -- Define the file 'handle'
 
-      variable line_in    : Line, 
+      variable line_in    : Line;
       variable line_out   : Line;     -- Line buffers
       variable good       : boolean;  -- Status of the read operations
       variable c          : integer;
