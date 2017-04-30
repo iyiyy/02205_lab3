@@ -38,7 +38,8 @@ begin
   TB : block
   begin
     process
-      file cmdfile: TEXT; -- Define the file 'handle'
+      file cmdfile: TEXT; -- Define input test vector file 'handle'
+      file outfile: TEXT; -- Define test result output file 'handle'
 
       variable line_in    : Line; 
       variable line_out   : Line;     -- Line buffers
@@ -64,9 +65,12 @@ begin
       wait for  5 ns;
       c := 1;
       ---------------------------------------------------------------------
-      FILE_OPEN(cmdfile,"testvecs.in",READ_MODE);
-
       loop
+        if c = 1 then
+          FILE_OPEN(cmdfile, "testvecs.in", READ_MODE);
+          FILE_OPEN(outfile, "testvecs.out", WRITE_MODE);
+        end if;
+        
         if endfile(cmdfile) then  -- Check EOF
           assert false
           report "End of file encountered; exiting."
@@ -96,7 +100,8 @@ begin
           end if;
 
           hwrite(line_out, Z, RIGHT, 9);
-          writeline(OUTPUT, line_out); -- write the message
+          writeline(outfile, line_out); -- write the message
+          
           SP := S;
           AP := A;
           BP := B;
@@ -116,30 +121,15 @@ begin
 
         A1 <= A;
         A2 <= B;
-
-        if (c = 1) then
-          SP := S;
-          AP := A;
-          BP := B;
-          readline(cmdfile,line_in);     -- Read a line from the file
-          next when line_in'length = 0;  -- Skip empty lines
-
-          hread(line_in,A,good);         -- Read the A argument as hex value
-          assert good report "Text I/O read error" severity ERROR;
-
-          hread(line_in,B,good);         -- Read the B argument as hex value
-          assert good report "Text I/O read error" severity ERROR;
-
-          hread(line_in,S,good);         -- Read the S argument as hex value
-          clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
-
-          A1 <= A;
-          A2 <= B;
-        end if;
+        SP := S;
+        AP := A;
+        BP := B;
 
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
+        clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
+        
         c := c + 1;
       end loop;
 
@@ -150,6 +140,8 @@ begin
       
       write(line_out, string'("-- END OF SIMULATION -------------------------"));
       writeline(OUTPUT, line_out); 
+      file_close(outfile);
+      file_close(cmdfile);
     end process;
   end block;
 end A;
