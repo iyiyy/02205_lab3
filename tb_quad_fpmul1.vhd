@@ -250,12 +250,12 @@ begin
   end block;
 end A;
 
-configuration CFG_TB_quad_fpmul1_BEHAVIORAL of E is
+configuration cfg_tb_quad_fpmul1_BEHAVIORAL of E is
   for A
-    for UUT : fpmul1
-      use configuration WORK.cfg_fpmul1_schematic;
+    for UUT : quad_fpmul1
+      use configuration WORK.cfg_quad_fpmul1_schematic;
     end for;
     for TB
     end for;
   end for;
-end CFG_TB_quad_fpmul1_BEHAVIORAL;
+end cfg_tb_quad_fpmul1_BEHAVIORAL;
