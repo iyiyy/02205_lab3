@@ -40,7 +40,7 @@ begin
     process
       file cmdfile: TEXT; -- Define the file 'handle'
 
-      variable line_in    : Line, 
+      variable line_in    : Line; 
       variable line_out   : Line;     -- Line buffers
       variable good       : boolean;  -- Status of the read operations
       variable c          : integer;
@@ -163,3 +163,4 @@ configuration CFG_TB_quad_fpmul1_BEHAVIORAL of E is
     end for;
   end for;
 end CFG_TB_quad_fpmul1_BEHAVIORAL;
+
