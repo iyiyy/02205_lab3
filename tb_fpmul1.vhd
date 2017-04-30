@@ -74,26 +74,6 @@ begin
           exit;
         end if;
 
-        if (c = 1) then
-          SP := S;
-          AP := A;
-          BP := B;
-          readline(cmdfile,line_in);     -- Read a line from the file
-          next when line_in'length = 0;  -- Skip empty lines
-
-          hread(line_in,A,good);         -- Read the A argument as hex value
-          assert good report "Text I/O read error" severity ERROR;
-
-          hread(line_in,B,good);         -- Read the B argument as hex value
-          assert good report "Text I/O read error" severity ERROR;
-
-          hread(line_in,S,good);         -- Read the S argument as hex value
-          clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
-
-          A1 <= A;
-          A2 <= B;
-        end if;
-
         if (c > 1) then
           write(line_out, string'("Test "));
           write(line_out, c - 1);
@@ -136,6 +116,26 @@ begin
 
         A1 <= A;
         A2 <= B;
+
+        if (c = 1) then
+          SP := S;
+          AP := A;
+          BP := B;
+          readline(cmdfile,line_in);     -- Read a line from the file
+          next when line_in'length = 0;  -- Skip empty lines
+
+          hread(line_in,A,good);         -- Read the A argument as hex value
+          assert good report "Text I/O read error" severity ERROR;
+
+          hread(line_in,B,good);         -- Read the B argument as hex value
+          assert good report "Text I/O read error" severity ERROR;
+
+          hread(line_in,S,good);         -- Read the S argument as hex value
+          clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
+
+          A1 <= A;
+          A2 <= B;
+        end if;
 
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
