@@ -74,49 +74,6 @@ begin
           exit;
         end if;
 
-        if (c > 1) then
-          write(line_out, string'("Test "));
-          write(line_out,c-1);
-          if (Z = SP) then
-            write(line_out, string'(" passed:"));
-          else
-            write(line_out, string'(" FAILED:"));
-          end if;
-
-          hwrite(line_out,AP,RIGHT,9);
-          write(line_out, string'(" *"));
-          hwrite(line_out,BP,RIGHT,9);
-          write(line_out, string'(" -> "));
-          hwrite(line_out,SP,RIGHT,9);
-      
-          if (Z = SP) then
-            write(line_out, string'(" =="));
-          else
-            write(line_out, string'(" <>"));
-          end if;
-
-          hwrite(line_out,Z,RIGHT,9);
-          writeline(OUTPUT,line_out); -- write the message
-          SP := S;
-          AP := A;
-          BP := B;
-        end if;
-
-        readline(cmdfile,line_in);     -- Read a line from the file
-        next when line_in'length = 0;  -- Skip empty lines
-
-        hread(line_in,A,good);         -- Read the A argument as hex value
-        assert good report "Text I/O read error" severity ERROR;
-
-        hread(line_in,B,good);         -- Read the B argument as hex value
-        assert good report "Text I/O read error" severity ERROR;
-
-        hread(line_in,S,good);         -- Read the S argument as hex value
-        assert good report "Text I/O read error" severity ERROR;
-
-        A1 <= A;
-        A2 <= B;
-
         if (c = 1) then
           SP := S;
           AP := A;
@@ -137,6 +94,49 @@ begin
           A2 <= B;
         end if;
 
+        if (c > 1) then
+          write(line_out, string'("Test "));
+          write(line_out, c - 1);
+          if (Z = SP) then
+            write(line_out, string'(" PASSED:"));
+          else
+            write(line_out, string'(" FAILED:"));
+          end if;
+
+          hwrite(line_out, AP, RIGHT, 9);
+          write(line_out, string'(" *"));
+          hwrite(line_out, BP, RIGHT,9);
+          write(line_out, string'(" -> "));
+          hwrite(line_out, SP, RIGHT, 9);
+      
+          if (Z = SP) then
+            write(line_out, string'(" =="));
+          else
+            write(line_out, string'(" <>"));
+          end if;
+
+          hwrite(line_out, Z, RIGHT, 9);
+          writeline(OUTPUT, line_out); -- write the message
+          SP := S;
+          AP := A;
+          BP := B;
+        end if;
+
+        readline(cmdfile, line_in);     -- Read a line from the file
+        next when line_in'length = 0;  -- Skip empty lines
+
+        hread(line_in, A, good);         -- Read the A argument as hex value
+        assert good report "Text I/O read error" severity ERROR;
+
+        hread(line_in, B, good);         -- Read the B argument as hex value
+        assert good report "Text I/O read error" severity ERROR;
+
+        hread(line_in, S, good);         -- Read the S argument as hex value
+        assert good report "Text I/O read error" severity ERROR;
+
+        A1 <= A;
+        A2 <= B;
+
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
@@ -147,6 +147,7 @@ begin
 
       clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
       clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
+      
       write(line_out, string'("-- END OF SIMULATION -------------------------"));
       writeline(OUTPUT, line_out); 
     end process;
