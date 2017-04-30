@@ -16,7 +16,7 @@ entity quad_fpmul1 is
     p0    : out std_logic_vector(31 downto 0);
     p1    : out std_logic_vector(31 downto 0);
     p2    : out std_logic_vector(31 downto 0);
-    p3    : out std_logic_vector(31 downto 0);
+    p3    : out std_logic_vector(31 downto 0)
   );
 end quad_fpmul1;
 
