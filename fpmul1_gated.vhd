@@ -1,7 +1,7 @@
 library IEEE;
   use IEEE.std_logic_1164.all;
 
-entity fpmul1 is
+entity fpmul1_gated is
   port(
     idle  : in std_logic; 
     en    : in std_logic;
@@ -9,11 +9,11 @@ entity fpmul1 is
     A2    : in std_logic_vector (31 downto 0);
     CLOCK : in std_logic;
     RESET : in std_logic;
-    Z     : out std_logic_vector (31 downto 0);
+    Z     : out std_logic_vector (31 downto 0)
   );
-end fpmul1;
+end fpmul1_gated;
 
-architecture SCHEMATIC of fpmul1 is
+architecture SCHEMATIC of fpmul1_gated is
   signal BX   : std_logic_vector(31 downto 0);
   signal BY   : std_logic_vector(31 downto 0);
   signal MX   : std_logic_vector(23 downto 0);
@@ -102,7 +102,7 @@ architecture SCHEMATIC of fpmul1 is
 
 begin -- architecture SCHEMATIC
 
-  clkGated <= (idle xor en) nand (not clock)
+  clkGated <= (idle xor en) nand (not clock);
 
   I_1 : reg32b
   generic map(n => 31)
@@ -214,7 +214,7 @@ begin -- architecture SCHEMATIC
   MY(23) <= '1'; MY(22 downto 0) <= BY(22 downto 0); 
 end SCHEMATIC;
 
-configuration CFG_FPMUL1_SCHEMATIC of FPMUL1 is
+configuration CFG_FPMUL1_GATED_SCHEMATIC of FPMUL1_gated is
   for SCHEMATIC
     for I_1, I_2, I_3, I_8, I_9: reg32b
       use configuration WORK.CFG_reg32b_BEHAVIORAL;
@@ -235,4 +235,4 @@ configuration CFG_FPMUL1_SCHEMATIC of FPMUL1 is
       use configuration WORK.CFG_gl_mux21_BEHAVIORAL;
     end for;
   end for;
-end CFG_FPMUL1_SCHEMATIC;
+end CFG_FPMUL1_GATED_SCHEMATIC;

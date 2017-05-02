@@ -1,7 +1,7 @@
 library ieee;
   use ieee.std_logic_1164.all;
 
-entity quad_fpmul1 is
+entity gated_quad_fpmul1 is
   port(
     clock : in std_logic;
     reset : in std_logic;
@@ -26,9 +26,9 @@ entity quad_fpmul1 is
     p2    : out std_logic_vector(31 downto 0);
     p3    : out std_logic_vector(31 downto 0)
   );
-end quad_fpmul1;
+end gated_quad_fpmul1;
 
-architecture schematic of quad_fpmul1 is
+architecture schematic of gated_quad_fpmul1 is
 
   component fpmul1_gated
   port(
@@ -89,10 +89,10 @@ begin -- architecture schematic
   );
 end schematic;
 
-configuration cfg_quad_fpmul1_schematic of quad_fpmul1 is
+configuration cfg_gated_quad_fpmul1_schematic of gated_quad_fpmul1 is
   for schematic
-    for mul0, mul1, mul2, mul3 : fpmul1
-      use configuration work.CFG_FPMUL1_SCHEMATIC;
+    for mul0, mul1, mul2, mul3 : fpmul1_gated
+      use configuration work.CFG_FPMUL1_GATED_SCHEMATIC;
     end for;
   end for;
-end cfg_quad_fpmul1_schematic;
+end cfg_gated_quad_fpmul1_schematic;
