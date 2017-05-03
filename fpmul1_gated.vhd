@@ -34,7 +34,8 @@ architecture SCHEMATIC of fpmul1_gated is
 
   -- idle signal
   signal idle : std_logic;
-
+  attribute syn_preserve : boolean;
+  attribute syn_preserve of idle : signal is true;
   -- gated input clock
   signal clkGated : std_logic;
 
