@@ -5,10 +5,6 @@ entity gated_quad_fpmul1 is
   port(
     clock : in std_logic;
     reset : in std_logic;
-    idle0 : in std_logic;
-    idle1 : in std_logic;
-    idle2 : in std_logic;
-    idle3 : in std_logic;
     en0   : in std_logic;
     en1   : in std_logic;
     en2   : in std_logic;
@@ -32,12 +28,11 @@ architecture schematic of gated_quad_fpmul1 is
 
   component fpmul1_gated
   port(
-    idle  : in std_logic;
-    en    : in std_logic;
     A1    : in std_logic_vector(31 downto 0);
     A2    : in std_logic_vector(31 downto 0);
     CLOCK : in std_logic;
     RESET : in std_logic;
+    en    : in std_logic;
     Z     : out std_logic_vector(31 downto 0)
   );
   end component;
@@ -46,45 +41,41 @@ begin -- architecture schematic
 
   mul0 : fpmul1_gated
   port map(
-    idle  => idle0,
-    en    => en0,
     A1    => x0,
     A2    => y0,
     CLOCK => clock,
     RESET => reset,
+    en    => en0,
     Z     => p0
   );
 
   mul1 : fpmul1_gated
   port map(
-    idle  => idle1,
-    en    => en1,
     A1    => x1,
     A2    => y1,
     CLOCK => clock,
     RESET => reset,
+    en    => en1,
     Z     => p1
   );
 
   mul2 : fpmul1_gated
   port map(
-    idle  => idle2,
-    en    => en2,
     A1    => x2,
     A2    => y2,
     CLOCK => clock,
     RESET => reset,
+    en    => en2,
     Z     => p2
   );
 
   mul3 : fpmul1_gated
   port map(
-    idle  => idle3,
-    en    => en3,
     A1    => x3,
     A2    => y3,
     CLOCK => clock,
     RESET => reset,
+    en    => en3,
     Z     => p3
   );
 end schematic;

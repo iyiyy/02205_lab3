@@ -3,12 +3,11 @@ library IEEE;
 
 entity fpmul1_gated is
   port(
-    idle  : in std_logic; 
-    en    : in std_logic;
     A1    : in std_logic_vector (31 downto 0);
     A2    : in std_logic_vector (31 downto 0);
     CLOCK : in std_logic;
     RESET : in std_logic;
+    en    : in std_logic;
     Z     : out std_logic_vector (31 downto 0)
   );
 end fpmul1_gated;
@@ -32,6 +31,9 @@ architecture SCHEMATIC of fpmul1_gated is
   -- expadd pipeline signals
   signal EXP_del1 : std_logic_vector(7 downto 0);
   signal EXP_del2 : std_logic_vector(7 downto 0);
+
+  -- idle signal
+  signal idle : std_logic;
 
   -- gated input clock
   signal clkGated : std_logic;
@@ -101,7 +103,9 @@ architecture SCHEMATIC of fpmul1_gated is
   end component;
 
 begin -- architecture SCHEMATIC
-
+  -- make the multiplier idle by default
+  idle <= '0';
+  -- clock gating function
   clkGated <= (idle xor en) nand (not clock);
 
   I_1 : reg32b
