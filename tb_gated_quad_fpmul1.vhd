@@ -97,24 +97,34 @@ begin
       variable en_mul3    : boolean;
 
     begin
-      en_mul0 := true;
-      en_mul1 := true;
-      en_mul2 := true;
-      en_mul3 := true;
+      en_mul0 <= '1';
+      en_mul1 <= '1';
+      en_mul2 <= '1';
+      en_mul3 <= '1';
 
       SP := (others => '0');
+      
       x0 <= (others => '0');
       y0 <= (others => '0');
+      x1 <= (others => '0');
+      y1 <= (others => '0');
+      x2 <= (others => '0');
+      y2 <= (others => '0');
+      x3 <= (others => '0');
+      y3 <= (others => '0');
+
       reset <= '0';
       wait for  5 ns;
       reset <= '1';
       clock <= '0';
       wait for  5 ns;
-      c := 1;
+c := 1;
       ---------------------------------------------------------------------
-      FILE_OPEN(cmdfile,"testvecs.in",READ_MODE);
-
       loop
+        if c = 1 then
+          FILE_OPEN(cmdfile, "testvecs.in", READ_MODE);
+        end if;
+        
         if endfile(cmdfile) then  -- Check EOF
           assert false
           report "End of file encountered; exiting."
@@ -125,40 +135,10 @@ begin
         if (c > 1) then
           write(line_out, string'("Test "));
           write(line_out, c - 1);
-
-          if en_mul0 then
-            if (p0 = SP) then
-              write(line_out, string'(" PASSED:"));
-            else
-              write(line_out, string'(" FAILED:"));
-            end if;
-          end if;
-
-
-          if en_mul1 then
-            if (p1 = SP) then
-              write(line_out, string'(" PASSED:"));
-            else
-              write(line_out, string'(" FAILED:"));
-            end if;
-          end if;
-
-
-          if en_mul2 then
-            if (p2 = SP) then
-              write(line_out, string'(" PASSED:"));
-            else
-              write(line_out, string'(" FAILED:"));
-            end if;
-          end if;
-
-
-          if en_mul3 then
-            if (p3 = SP) then
-              write(line_out, string'(" PASSED:"));
-            else
-              write(line_out, string'(" FAILED:"));
-            end if;
+          if (Z = SP) then
+            write(line_out, string'(" PASSED:"));
+          else
+            write(line_out, string'(" FAILED:"));
           end if;
 
           hwrite(line_out, AP, RIGHT, 9);
@@ -167,40 +147,15 @@ begin
           write(line_out, string'(" -> "));
           hwrite(line_out, SP, RIGHT, 9);
       
-          if en_mul0 then
-            if (p0 = SP) then
-              write(line_out, string'(" =="));
-            else
-              write(line_out, string'(" <>"));
-            end if;
+          if (Z = SP) then
+            write(line_out, string'(" =="));
+          else
+            write(line_out, string'(" <>"));
           end if;
 
-          if en_mul0 then
-            if (p1 = SP) then
-              write(line_out, string'(" =="));
-            else
-              write(line_out, string'(" <>"));
-            end if;
-          end if;
-
-          if en_mul0 then
-            if (p2 = SP) then
-              write(line_out, string'(" =="));
-            else
-              write(line_out, string'(" <>"));
-            end if;
-          end if;
-
-          if en_mul0 then
-            if (p3 = SP) then
-              write(line_out, string'(" =="));
-            else
-              write(line_out, string'(" <>"));
-            end if;
-          end if;
-
-          hwrite(line_out, p0, RIGHT, 9);
+          hwrite(line_out, Z, RIGHT, 9);
           writeline(OUTPUT, line_out); -- write the message
+          
           SP := S;
           AP := A;
           BP := B;
@@ -218,36 +173,24 @@ begin
         hread(line_in, S, good);         -- Read the S argument as hex value
         assert good report "Text I/O read error" severity ERROR;
 
-        if en_mul0 then
-          x0 <= A;
-          y0 <= B;
-        end if;
-
-        if en_mul1 then
-          x1 <= A;
-          y1 <= B;
-        end if;
-
-        if en_mul2 then  
-          x2 <= A;
-          y2 <= B;
-        end if;
-
-        if en_mul3 then
-          x3 <= A;
-          y3 <= B;
-        end if;
-
+        x0 <= A;
+        y0 <= B;
+        x1 <= A;
+        y1 <= B;
+        x2 <= A;
+        y2 <= B;
+        x3 <= A;
+        y3 <= B;
         
+        SP := S;
         AP := A;
         BP := B;
-        SP := S;
 
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
-
+        
         c := c + 1;
       end loop;
 
@@ -257,7 +200,8 @@ begin
       clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
       
       write(line_out, string'("-- END OF SIMULATION -------------------------"));
-      writeline(OUTPUT, line_out); 
+      writeline(OUTPUT, line_out);
+      file_close(cmdfile);
     end process;
   end block;
 end A;
