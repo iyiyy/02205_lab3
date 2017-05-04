@@ -129,6 +129,8 @@ begin
         c := c + 1;
 
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
+        -- pulling enable low to check that the data in the pipeline is not flushed
+        en <= '0';
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
