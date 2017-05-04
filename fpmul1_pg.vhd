@@ -12,7 +12,7 @@ entity fpmul1_pg is
   );
 end fpmul1_pg;
 
-architecture SCHEMATIC of fpmul1_pg is
+architecture schematic of fpmul1_pg is
   signal BX   : std_logic_vector(31 downto 0);
   signal BY   : std_logic_vector(31 downto 0);
   signal MX   : std_logic_vector(23 downto 0);
@@ -217,10 +217,10 @@ begin -- architecture SCHEMATIC
   -- must include inplicit 1
   MX(23) <= '1'; MX(22 downto 0) <= BX(22 downto 0); 
   MY(23) <= '1'; MY(22 downto 0) <= BY(22 downto 0); 
-end SCHEMATIC;
+end schematic;
 
-configuration CFG_fpmul1_pg_SCHEMATIC of fpmul1_pg is
-  for SCHEMATIC
+configuration cfg_fpmul1_pg_schematic of fpmul1_pg is
+  for schematic
     for I_1, I_2, I_3, I_8, I_9: reg32b
       use configuration WORK.CFG_reg32b_BEHAVIORAL;
     end for;
@@ -240,4 +240,4 @@ configuration CFG_fpmul1_pg_SCHEMATIC of fpmul1_pg is
       use configuration WORK.CFG_gl_mux21_BEHAVIORAL;
     end for;
   end for;
-end CFG_fpmul1_pg_SCHEMATIC;
+end cfg_fpmul1_pg_schematic;
