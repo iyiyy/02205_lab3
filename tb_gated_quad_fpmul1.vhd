@@ -122,7 +122,7 @@ c := 1;
       ---------------------------------------------------------------------
       loop
         if c = 1 then
-          FILE_OPEN(cmdfile, "testvecs.in", READ_MODE);
+          file_open(cmdfile, "testvecs.in", read_mode);
         end if;
         
         if endfile(cmdfile) then  -- Check EOF

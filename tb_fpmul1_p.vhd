@@ -57,7 +57,7 @@ begin
       wait for  5 ns;
       c := 1;
   -- -------------------------------------------------------------------------
-      FILE_OPEN(cmdfile,"testvecs.in",READ_MODE);
+      file_open(cmdfile,"testvecs.in",read_mode);
     
       loop
         if endfile(cmdfile) then  -- Check EOF
@@ -111,6 +111,11 @@ begin
 
         A1 <= A;
         A2 <= B;
+
+        AP := A;
+        SP := S;
+        BP := B;
+        
         c := c + 1;
 
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;

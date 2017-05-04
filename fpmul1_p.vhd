@@ -31,13 +31,6 @@ architecture schematic of fpmul1_p is
   signal EXP_del1 : std_logic_vector(7 downto 0);
   signal EXP_del2 : std_logic_vector(7 downto 0);
 
-  -- idle signal
-  signal idle : std_logic;
-  attribute syn_preserve : boolean;
-  attribute syn_preserve of idle : signal is true;
-  -- gated input clock
-  signal clkGated : std_logic;
-
   component reg32b
   generic(n : integer);
   port(
@@ -116,7 +109,7 @@ begin -- architecture SCHEMATIC
   generic map(n => 31)
   port map(
     A     => A2(31 downto 0),
-    CLOCK => CLOK,
+    CLOCK => CLOCK,
     RESET => RESET,
     Z     => BY(31 downto 0) 
   );
