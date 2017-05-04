@@ -24,7 +24,7 @@ architecture A of E is
   signal p3    : std_logic_vector(31 downto 0);
 
   component quad_fpmul1
-    Port ( 
+    port ( 
       CLOCK : in std_logic;
       RESET : in std_logic;
       x0    : in std_logic_vector(31 downto 0);
@@ -93,6 +93,7 @@ begin
       SP := (others => '0');
       x0 <= (others => '0');
       y0 <= (others => '0');
+
       reset <= '0';
       wait for  5 ns;
       reset <= '1';
@@ -100,7 +101,7 @@ begin
       wait for  5 ns;
       c := 1;
       ---------------------------------------------------------------------
-      FILE_OPEN(cmdfile,"testvecs.in",READ_MODE);
+      file_open(cmdfile,"testvecs.in",read_mode);
 
       loop
         if endfile(cmdfile) then  -- Check EOF
@@ -231,12 +232,13 @@ begin
         BP := B;
         SP := S;
 
+        c := c + 1;
+
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
         clock <= '1'; wait for  5 ns; clock <= '0'; wait for  5 ns;
 
-        c := c + 1;
       end loop;
 
       --------------------------------------------------------------------

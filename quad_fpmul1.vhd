@@ -22,7 +22,7 @@ end quad_fpmul1;
 
 architecture schematic of quad_fpmul1 is
 
-  component fpmul1
+  component fpmul1_p
   port(
     A1    : in std_logic_vector(31 downto 0);
     A2    : in std_logic_vector(31 downto 0);
@@ -34,7 +34,7 @@ architecture schematic of quad_fpmul1 is
 
 begin -- architecture schematic
 
-  mul0 : fpmul1
+  mul0 : fpmul1_p
   port map(
     A1    => x0,
     A2    => y0,
@@ -43,7 +43,7 @@ begin -- architecture schematic
     Z     => p0
   );
 
-  mul1 : fpmul1
+  mul1 : fpmul1_p
   port map(
     A1    => x1,
     A2    => y1,
@@ -52,7 +52,7 @@ begin -- architecture schematic
     Z     => p1
   );
 
-  mul2 : fpmul1
+  mul2 : fpmul1_p
   port map(
     A1    => x2,
     A2    => y2,
@@ -61,7 +61,7 @@ begin -- architecture schematic
     Z     => p2
   );
 
-  mul3 : fpmul1
+  mul3 : fpmul1_p
   port map(
     A1    => x3,
     A2    => y3,
@@ -73,8 +73,8 @@ end schematic;
 
 configuration cfg_quad_fpmul1_schematic of quad_fpmul1 is
   for schematic
-    for mul0, mul1, mul2, mul3 : fpmul1
-      use configuration work.CFG_FPMUL1_SCHEMATIC;
+    for mul0, mul1, mul2, mul3 : fpmul1_p
+      use configuration work.cfg_fpmul1_p_schematic;
     end for;
   end for;
 end cfg_quad_fpmul1_schematic;
